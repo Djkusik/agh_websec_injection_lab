@@ -1,4 +1,4 @@
-# AGH WebSec Injection Lab
+# The Secret Tower
 
 ```
               o                             
@@ -9,7 +9,7 @@
                  O    (^ '----' `)          - To my power obtain,
                        `\-....-/^               You have to face three great tasks.
              O       o  ) "/ " (              
-                       _( (-)  )_           - Here's The Scroll with instructions.
+                       _( (-)  )_           - Here's The Scroll with instructions. Good luck.
                    O  /\ )    (  /\         
                      /  \(    ) |  \
                  o  o    \)  ( /    \
@@ -34,10 +34,36 @@
 ```
 
 # The Scroll
-Remember Young Adventurer, to inform me about every task completion using [Telepathy](/flag_server)
+
+```
+                                             _______________________
+   _______________________-------------------                       `\
+ /:--__                                                              |
+||< > |                                   ___________________________/
+| \__/_________________-------------------                         |
+|                                                                  |
+ |                          THE SCROLL                              |
+ |                                                                  |
+ |      "Remember Young Adventurer, to inform me                    |
+  |        about every task completion using Telepathy,              |
+  |      First task,                                                 |
+  |        Second task                                               |
+  |      Third task.                                                  |
+   |                                                                  |
+   |                                                                  |
+   |                                                                 |
+  |                                              ____________________|_
+  |  ___________________-------------------------                      `\
+  |/`--_                                                                 |
+  ||[ ]||                                            ___________________/
+   \===/___________________--------------------------
+```
+
+* Learn some [Telepathy](/flag_server) first
 * Task one
 * Task two
 * Task three
+
 
 # Setup
 * local:

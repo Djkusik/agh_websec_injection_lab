@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <div class="container">
+        <pre>
+                                                             ,|/
+                                                           -~.|
+                                                        _-~  /
+                                                     _-~    /_-~|
+                                                 _ -~     _-~ ,/'
+                                           __--~~__--\ _-~  _/,
+                                     __--~~  --~~  __/~  _-~ /
+                                    /        __--~~  \-~~ _-~
+                                   /     --~~   __--~' _-~ ~|
+                                  /     ___---~~  ~~\~~__--~
+                _.---.           /           __--~~~'~~/  _.-~"~~-.
+             .-"      "=\ __    /      ~~~~~__\__---~~_.-~  _.--.  )
+            (_ .-b=-   =:Y  ~~~/      ---~~~/__-----=~   ,-~__.'  ,'
+           /  __      =:;l    /      ----~~/            Y (____.-"
+          / o~  "c    =~:l    (      ---~~/     __  `:::|
+         (  .--~"~-._=~;/'___  `----~~~~'     ,'  `\  `:|
+          \(       ( ~~ ,'  ,`\              (      `\ /
+        .=z.       `>.-~   /   )          ___.\_     `Y.
+           \`------}    .-"  _/"~~~----~~~ __./'        )
+         .==)_.&gt;---}_   __.-~          ,-~~         ,-~'
+               \\    "~"              :      __.--"~
+                ))                     `((((~~ 
+        </pre>
+        <div id="messages">
+
+        </div>
+        <input id="answer" type="text" placeholder="Your answer">
+        <input id="buttonInput" type="submit" value="Send">
+    </div>>
+
+    <script>
+        function sendAnswer() {
+            var answer = $("#answer").val();
+            $("#messages").append('Adventurer: ' + answer + '</br>');
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var response = xhr.responseText;
+                    $("#messages").append('Gryphon: ' + response + '</br>');
+                }
+            }
+
+            const data = new FormData();
+            data.append("answer", answer);
+            xhr.open("POST", "/gryphon", true);
+            xhr.send(data);
+        }
+
+        $("#answer").keypress(function (e) {
+                if (e.keyCode === 13) {
+                    sendAnswer();
+                    document.getElementById('answer').value = '';
+                }
+        });
+
+        $("#buttonInput").click(function () {
+            sendAnswer();
+            document.getElementById('answer').value = '';
+        });
+    </script>
+
+{% endblock %}
