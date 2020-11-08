@@ -1,5 +1,6 @@
 import json
 import os
+import logging
 
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer, ChatterBotCorpusTrainer
@@ -8,7 +9,9 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 app.config.from_object('app.config')
-TASK_PATH = os.environ.get('TASK_PATH', '/just_task')
+logging.basicConfig(level=logging.DEBUG)
+EASY_TASK_PATH = os.environ.get('EASY_TASK_PATH', '/just_task')
+MEDIUM_TASK_PATH = os.environ.get('MEDIUM_TASK_PATH', '/little_harder')
 
 gryphon_bot = ChatBot(
     'Gryphon',

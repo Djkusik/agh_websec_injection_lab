@@ -7,7 +7,7 @@ import threading
 from chat_enums import ServerMessage, ClientMessage
 
 
-class ThreadedServer:
+class Server:
     banned_nick = ['zakazany', 'SERVER']
 
     def __init__(self, host=socket.gethostname(), port=5555):

@@ -5,7 +5,6 @@ import argparse
 import threading
 
 from chat_enums import ServerMessage, ClientMessage
-from ascii_art import arts
 
 
 class Client:

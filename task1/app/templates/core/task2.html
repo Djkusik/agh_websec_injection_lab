@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <div class="container">
+        {% if attack is defined %}
+            <div>
+                Oh, sorry I forgot... I'm sandboxe... invicible I mean! Your miserable '{{ attack }}' cannot harm me.
+            </div>
+        {% else %}
+            <div>
+                You beat me once and You think You can conquer me again? <b>Attack</b> me again, I dare You!<br>
+                There is one method, old and forgotten... But probably the Great Mage told You something about it or gave You some additional content...
+            </div>
+        {% endif %}
+    </div>
+    
+{% endblock %}
