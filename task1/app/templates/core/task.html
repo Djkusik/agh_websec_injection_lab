@@ -2,8 +2,15 @@
 {% block body %}
 
     <div class="container">
-        
+        {% if name is defined %}
+            <div>
+                Oh, so the human has the name? Right {{ name | safe}}?
+            </div>
+        {% else %}
+            <div>
+                Who dares speak to me!? You filthy human!? What is even your name?
+            </div>
+        {% endif %}
     </div>
-
     
 {% endblock %}
