@@ -1,3 +1,4 @@
+import jinja2
 from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, \
                   abort, jsonify
 from app import gryphon_bot, TASK_PATH, app
@@ -20,7 +21,11 @@ def gryphon():
 def task():
     name = request.args.get('name')
     if name is not None:
-        template = app.jinja_env.from_string(name).render()
+        try:
+            template = app.jinja_env.from_string(name).render()
+        except jinja2.TemplateSyntaxError as e:
+            log.error('Error: ' + str(e))
+            return (render_template('core/task.html'))
         return (render_template('core/task.html', name=template))
     else:
         return (render_template('core/task.html'))
