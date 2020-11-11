@@ -45,12 +45,12 @@
  |                          THE SCROLL                              |
  |                                                                  |
  |      "Remember Young Adventurer, to inform me                    |
-  |        about every task completion using Telepathy,              |
-  |      First task,                                                 |
-  |        Second task                                               |
-  |      Third task.                                                  |
-   |                                                                  |
-   |                                                                  |
+  |        about every task completion using Telepathy.              |
+  |      First task is to meet The End. The Gryphon is the one,      |
+  |        who knows exact location, ask his head.                   |
+  |      Second task has to be brutal strenght demonstration          |
+   |       You need to impress The Royal Paladin.                     |
+   |     Third task.                                                  |
    |                                                                 |
   |                                              ____________________|_
   |  ___________________-------------------------                      `\
@@ -60,8 +60,8 @@
 ```
 
 * Learn some [Telepathy](/flag_server) first
-* Task one
-* Task two
+* Task one - [The End](/task1)
+* Task two - [Strenght Demonstration](/task2)
 * Task three
 
 
@@ -73,4 +73,4 @@
 * remote at:
 
 # Solutions
-* Later
+* [Solve scripts](/solve)

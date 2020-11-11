@@ -46,3 +46,4 @@ prod_*
 *.db*
 .env
 flags
+solve
