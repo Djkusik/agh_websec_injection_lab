@@ -5,13 +5,19 @@ import logging
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer, ChatterBotCorpusTrainer
 from flask import Flask, render_template
+from dotenv import load_dotenv
+from app.core.flags import create_flags
 
-
+load_dotenv()
 app = Flask(__name__)
 app.config.from_object('app.config')
 logging.basicConfig(level=logging.DEBUG)
 EASY_TASK_PATH = os.environ.get('EASY_TASK_PATH', '/just_task')
 MEDIUM_TASK_PATH = os.environ.get('MEDIUM_TASK_PATH', '/little_harder')
+EASY_COOKIE = os.environ.get('EASY_COOKIE', 'easy_known')
+MEDIUM_COOKIE = os.environ.get('MEDIUM_COOKIE', 'medium_known')
+
+create_flags()
 
 gryphon_bot = ChatBot(
     'Gryphon',

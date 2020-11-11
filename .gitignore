@@ -45,3 +45,4 @@ venv.bak/
 prod_*
 *.db*
 .env
+flags
