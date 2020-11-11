@@ -3,10 +3,29 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">First task - Template Injection</a>
+            <a class="navbar-brand" href="#">First task - Server-Side Template Injection</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/">Gryphon <span class="sr-only"></span></a>
+                  </li>
+                  {% if is_easy_known %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ EASY_TASK_PATH }}">Task Easy <span class="sr-only"></span></a>
+                    </li>
+                  {% endif %}
+                  {% if is_medium_known %}
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{ MEDIUM_TASK_PATH }}">Task Medium <span class="sr-only"></span></a>
+                  </li>
+                  {% endif %}
+                </ul>
+            </div>
+          </nav>
     </header>
     <article>
         {% block body %}{% endblock %}

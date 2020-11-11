@@ -1,14 +1,120 @@
 {% extends "layout.html" %}
 {% block body %}
-
+<style>
+    center {text-align: center;}
+</style>
     <div class="container">
         {% if name is defined %}
             <div>
-                Oh, so the human has the name? Right {{ name | safe }}?
+                <pre>
+                    ...
+                    ;::::;
+                  ;::::; :;
+                ;:::::'   :;        Oh, so the human has the name? Right {{ name | safe }}?
+               ;:::::;     ;.
+              ,:::::'       ;           OOO\
+              ::::::;       ;          OOOOO\
+              ;:::::;       ;         OOOOOOOO
+             ,;::::::;     ;'         / OOOOOOO
+           ;:::::::::`. ,,,;.        /  / DOOOOOO
+         .';:::::::::::::::::;,     /  /     DOOOO
+        ,::::::;::::::;;;;::::;,   /  /        DOOO
+       ;`::::::`'::::::;;;::::: ,#/  /          DOOO
+       :`:::::::`;::::::;;::: ;::#  /            DOOO
+       ::`:::::::`;:::::::: ;::::# /              DOO
+       `:`:::::::`;:::::: ;::::::#/               DOO
+        :::`:::::::`;; ;:::::::::##                OO
+        ::::`:::::::`;::::::::;:::#                OO
+        `:::::`::::::::::::;'`:;::#                O
+         `:::::`::::::::;' /  / `:#
+          ::::::`:::::;'  /  /   `#
+                </pre>
+            </div>
+        {% elif uno is defined %}
+            <div>
+                <pre>
+                                  ...----....
+                            ..-:"''         ''"-..
+                         .-'                      '-.
+                       .'              .     .       '.
+                     .'   .          .    .      .    .''.
+                   .'  .    .       .   .   .     .   . ..:.
+                 .' .   . .  .       .   .   ..  .   . ....::.
+                ..   .   .      .  .    .     .  ..  . ....:IA.
+               .:  .   .    .    .  .  .    .. .  .. .. ....:IA.
+              .: .   .   ..   .    .     . . .. . ... ....:.:VHA.
+              '..  .  .. .   .       .  . .. . .. . .....:.::IHHB.
+             .:. .  . .  . .   .  .  . . . ...:.:... .......:HIHMM.
+            .:.... .   . ."::"'.. .   .  . .:.:.:II;,. .. ..:IHIMMA
+            ':.:..  ..::IHHHHHI::. . .  ...:.::::.,,,. . ....VIMMHM
+           .:::I. .AHHHHHHHHHHAI::. .:...,:IIHHHHHHMMMHHL:. . VMMMM
+          .:.:V.:IVHHHHHHHMHMHHH::..:" .:HIHHHHHHHHHHHHHMHHA. .VMMM.        <b>I'm stronger than You think.</b>
+          :..V.:IVHHHHHMMHHHHHHHB... . .:VPHHMHHHMMHHHHHHHHHAI.:VMMI
+          ::V..:VIHHHHHHMMMHHHHHH. .   .I":IIMHHMMHHHHHHHHHHHAPI:WMM
+          ::". .:.HHHHHHHHMMHHHHHI.  . .:..I:MHMMHHHHHHHHHMHV:':H:WM
+          :: . :.::IIHHHHHHMMHHHHV  .ABA.:.:IMHMHMMMHMHHHHV:'. .IHWW
+          '.  ..:..:.:IHHHHHMMHV" .AVMHMA.:.'VHMMMMHHHHHV:' .  :IHWV
+           :.  .:...:".:.:TPP"   .AVMMHMMA.:. "VMMHHHP.:... .. :IVAI
+          .:.   '... .:"'   .   ..HMMMHMMMA::. ."VHHI:::....  .:IHW'
+          ...  .  . ..:IIPPIH: ..HMMMI.MMMV:I:.  .:ILLH:.. ...:I:IM
+        : .   .'"' .:.V". .. .  :HMMM:IMMMI::I. ..:HHIIPPHI::'.P:HM.
+        :.  .  .  .. ..:.. .    :AMMM IMMMM..:...:IV":T::I::.".:IHIMA
+        'V:.. .. . .. .  .  .   'VMMV..VMMV :....:V:.:..:....::IHHHMH
+          "IHH:.II:.. .:. .  . . . " :HB"" . . ..PI:.::.:::..:IHHMMV"
+           :IP""HHII:.  .  .    . . .'V:. . . ..:IH:.:.::IHIHHMMMMM"
+           :V:. VIMA:I..  .     .  . .. . .  .:.I:I:..:IHHHHMMHHMMM
+           :"VI:.VWMA::. .:      .   .. .:. ..:.I::.:IVHHHMMMHMMMMI
+           :."VIIHHMMA:.  .   .   .:  .:.. . .:.II:I:AMMMMMMHMMMMMI
+           :..VIHIHMMMI...::.,:.,:!"I:!"I!"I!"V:AI:VAMMMMMMHMMMMMM'
+           ':.:HIHIMHHA:"!!"I.:AXXXVVXXXXXXXA:."HPHIMMMMHHMHMMMMMV
+             V:H:I:MA:W'I :AXXXIXII:IIIISSSSSSXXA.I.VMMMHMHMMMMMM
+               'I::IVA ASSSSXSSSSBBSBMBSSSSSSBBMMMBS.VVMMHIMM'"'
+                I:: VPAIMSSSSSSSSSBSSSMMBSSSBBMMMMXXI:MMHIMMI
+               .I::. "H:XIIXBBMMMMMMMMMMMMMMMMMBXIXXMMPHIIMM'
+               :::I.  ':XSSXXIIIIXSSBMBSSXXXIIIXXSMMAMI:.IMM
+               :::I:.  .VSSSSSISISISSSBII:ISSSSBMMB:MI:..:MM
+               ::.I:.  ':"SSSSSSSISISSXIIXSSSSBMMB:AHI:..MMM.
+               ::.I:. . ..:"BBSSSSSSSSSSSSBBBMMMB:AHHI::.HMMI
+               :..::.  . ..::":BBBBBSSBBBMMMB:MMMMHHII::IHHMI
+               ':.I:... ....:IHHHHHMMMMMMMMMMMMMMMHHIIIIHMMV"
+                 "V:. ..:...:.IHHHMMMMMMMMMMMMMMMMHHHMHHMHP'
+                  ':. .:::.:.::III::IHHHHMMMMMHMHMMHHHHM"
+                    "::....::.:::..:..::IIIIIHHHHMMMHHMV"
+                    "::.::.. .. .  ...:::IIHHMMMMHMV"
+                        "V::... . .I::IHHMMV"'
+                          '"VHVHHHAHHHHMMV:"'
+                </pre>
+                <center>
+                    
+                    <img src=static/uno.jpg>
+                </center>
+                
             </div>
         {% else %}
             <div>
-                Who dares speak to me!? You filthy human!? What is even your name?
+                <pre>
+                    ...
+                    .#####;  
+                  ;#      :;
+                ;##        :;       Who dares speak to me!? You filthy human!? What is even your <b>name</b>?
+               ;##   o   o  ;.
+              ,##            .          OOO\
+              ####           ;         OOOOO\
+              ;####         ;         OOOOOOOO
+             ,;####`.      ;          / OOOOOOO
+           ;#########`. ,,,;.        /  / DOOOOOO
+         .';#################;,     /  /     DOOOO
+        ,######;######;;;;####;,   /  /        DOOO
+       ;`######`'######;;;##### ,H/  /          DOOO
+       #`#######`;######;;### ;##H  /            DOOO
+       ##`#######`;######## ;####H /              DOO
+       `#`#######`;###### ;######H/               DOO
+        ###`#######`;; ;#########HH                OO
+        ####`#######`;########;###H                OO
+        `#####`############;'`#;##H                O
+         `#####`########;' /  / `#H
+          ######`#####;'  /  /   `H
+                </pre>
             </div>
         {% endif %}
     </div>
