@@ -46,4 +46,6 @@ prod_*
 *.db*
 .env
 flags
+near_me
 solve
+*.exe
