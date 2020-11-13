@@ -1,17 +1,15 @@
-FROM python:buster
+FROM python:3.7-buster
 
 RUN useradd tower
 
 WORKDIR /home/tower
 
-RUN pip install -U pip setuptools wheel
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 RUN python -m spacy download en
 
-COPY __init__.py run.py shell.py ./
+COPY __init__.py run.py shell.py .en[v] ./
 COPY app app
-COPY flags flags
 
 RUN chown -R tower:tower ./
 USER tower
