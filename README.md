@@ -60,17 +60,29 @@
 ```
 
 * Learn some [Telepathy](/flag_server) first
-* Task one - [The End](/task1)
+  * Download client, register, use it to send flags and check Your score
+* Task one - [The End](/task1)  
+  * Find path to the easy challenge using some reconnaissance (Burp/Web Dev Tools) and by asking Gryphon
+  * Solve easy SSTI challenge by finding a flag on the server - exploit SSTI to RCE (Remote Code Execution)
+  * Solve medium SSTI challenge by finding a method to escape from sandbox and get access to the *FLAG* variable inside *_\_main__* module
+  * You are up for the challenge? Find hard one - there is hidden one (inside SSTI vulnerability) inacessible from web
 * Task two - [Strenght Demonstration](/task2)
+  * EPILEPSY WARNING
+  * Find a method to inject a command to the form
+  * There are easter eggs ( ͡° ͜ʖ ͡°)
 * Task three
 
 
 # Setup
 * local:
 ```sh
-
+# https://docs.docker.com/compose/reference/up/
+docker-compose up -d --build
 ```
 * remote at:
+  * http://167.172.107.163:5000
+  * http://167.172.107.163:5001
+  * http://167.172.107.163:5002
 
 # Solutions
 * [Solve scripts](/solve)
