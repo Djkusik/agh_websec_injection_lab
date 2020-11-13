@@ -1,0 +1,10 @@
+version: '2'
+services:
+    task1:
+        build: ./task1
+        ports:
+            - "5000:5000"
+    task2:
+        build: ./task2
+        ports:
+            - "5001:5001"
