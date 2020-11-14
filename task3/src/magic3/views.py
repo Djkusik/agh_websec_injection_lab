@@ -20,7 +20,7 @@ def index(request):
 <!DOCTYPE html>
 <html>
 <head>
-    <title>-={ AGH web sec | Guons the Lazy }=-</title>
+    <title>-={ BIT CyberSec | Guons the Lazy }=-</title>
     <style>
     body {
         background-image: url("URL_BASE/static/images/stars.jpg");

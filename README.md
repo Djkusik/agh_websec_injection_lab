@@ -50,8 +50,8 @@
   |        who knows exact location, ask his head.                   |
   |      Second task has to be brutal strenght demonstration          |
    |       You need to command The Rainbow Paladin.                   |
-   |     Third task.                                                  |
-   |                                                                 |
+   |     Third task is to get a secret password from the              |
+   |       Guard of the secret - common techniques should help You." |
   |                                              ____________________|_
   |  ___________________-------------------------                      `\
   |/`--_                                                                 |
@@ -70,7 +70,11 @@
   * EPILEPSY WARNING
   * Find a method to inject a command to the form
   * There are easter eggs ( ͡° ͜ʖ ͡°)
-* Task three
+* Task three - [Secret stealer](/task3)
+  * Find a way to login to the portal
+  * Find Common Vulnerability & Exposure for used framework
+  * Get the flag from the password of *Guard of the secret*
+  * Wanted to do here also one more task, but I did not make it on time :c
 
 
 # Setup
@@ -78,15 +82,16 @@
 ```sh
 # https://docs.docker.com/compose/reference/up/
 docker-compose up -d --build
+# Build without -d if You want to read logs from apps
 ```
 * remote at:
   * http://167.172.107.163:5000
   * http://167.172.107.163:5001
-  * http://167.172.107.163:5002
+  * http://167.172.107.163:5002/magic3
 
 # Troubleshooting
   * docker-compose/docker build command says that pip returned non-zero code (137)
     * Clear memory or reboot machine - if that won't help then buy more RAM
 
 # Solutions
-* [Solve scripts](/solve)
+* [Solve scripts](/solve) - will be available week or two after workshops, for now they are hidden
