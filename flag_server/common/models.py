@@ -43,8 +43,8 @@ class Task(Base):
         return f'{self.name} :: <{self.points} | {self.lab_no}> solved {len(self.users)} times'
 
 
-class Solutions(Base):
-    __tablename__ == 'solutions'
+class Solution(Base):
+    __tablename__ = 'solutions'
     id = Column(Integer, Sequence('solution_id_seq'), primary_key=True)
 
     user_id = Column(Integer, ForeignKey('users.id'))

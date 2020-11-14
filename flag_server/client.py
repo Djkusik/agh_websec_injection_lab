@@ -83,7 +83,30 @@ class Client:
                     print("\nServer sent disconnection signal")
                     self.is_running = False
                     sys.exit(0)
-                self.print_msg(msg)
+                elif msg == ServerMessage.password_empty.name:
+                    print("\nYou gave empty password")
+                elif msg == ServerMessage.user_already_registered.name:
+                    print("\nUser with this nickname is already registered")
+                    self.is_running = False
+                    sys.exit(0)
+                elif msg == ServerMessage.registered.name:
+                    print("\nRegistered succesfully")
+                elif msg == ServerMessage.password_incorrect.name:
+                    print("\nIncorrect password")
+                elif msg == ServerMessage.message_incorrect.name:
+                    print("\nMessage format incorrect")
+                elif msg == ServerMessage.wrong_task.name:
+                    print("\nThere is no task with this taskname")
+                elif msg == ServerMessage.invalid_flag.name:
+                    print("\nFlag is incorrect :c")
+                elif msg == ServerMessage.task_solved.name:
+                    print("\nCongratulashions - correct flag!")
+                elif msg == ServerMessage.wrong_lab_no:
+                    print("\nWrong lab number")
+                elif msg == ServerMessage.wrong_stats_mode:
+                    print("\nWrong stats mode number")
+                else:
+                    self.print_msg(msg)
         except KeyboardInterrupt:
             self.close()
         except SystemExit:

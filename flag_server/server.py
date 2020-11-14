@@ -53,7 +53,7 @@ class Server:
         Base.metadata.create_all(engine)
 
     def init_engine(self):
-        return create_engine(f'postgresql://telepathy:{PASSWORD}@localhost:5432/telepathy')
+        return create_engine(f'postgresql://telepathy:{PASSWORD}@localhost/telepathy')
 
     def init_session(self, engine):
         Session = sessionmaker(autocommit=False, autoflush=True)
@@ -176,12 +176,12 @@ class Server:
         try:
             password = msg.split(' ')[1]
         except ValueError:
-            self.clients[nick][0].send(ServerMessage.password_empty.name)
+            self.clients[nick][0].send(ServerMessage.password_empty.name.encode('utf-8'))
             return
         if self.register(nick, password):
-            self.clients[nick][0].send(ServerMessage.registered.name)
+            self.clients[nick][0].send(ServerMessage.registered.name.encode('utf-8'))
         else:
-            self.clients[nick][0].send(ServerMessage.user_already_registered.name)
+            self.clients[nick][0].send(ServerMessage.user_already_registered.name.encode('utf-8'))
 
     def register(self, nick, password):
         user = User(name=nick, password=password)
@@ -197,7 +197,7 @@ class Server:
         try:
             code, password, taskname, flag = msg.split(' ')
         except ValueError:
-            self.clients[nick][0].send(ServerMessage.message_incorrect.name)
+            self.clients[nick][0].send(ServerMessage.message_incorrect.name.encode('utf-8'))
             return
         reply = self.solve(nick, password, taskname, flag)
         self.clients[nick][0].send(reply)
@@ -205,30 +205,30 @@ class Server:
     def solve(self, nick, password, taskname, flag):
         user = self.db_sess.query(User).filter(and_(User.name == nick, User.password == password)).first()
         if user is None:
-            return ServerMessage.password_incorrect.name
+            return ServerMessage.password_incorrect.name.encode('utf-8')
 
         task = self.db_sess.query(Task).filter(Task.name == taskname).first()
         if task is None:
-            return ServerMessage.wrong_task.name
+            return ServerMessage.wrong_task.name.encode('utf-8')
         if task.flag != flag:
-            return ServerMessage.invalid_flag.name
+            return ServerMessage.invalid_flag.name.encode('utf-8')
 
         if any([task.name == taskname for task in user.tasks]):
-            return ServerMessage.solved_already.name
+            return ServerMessage.solved_already.name.encode('utf-8')
 
         user.tasks.append(task)
         self.db_sess.commit()
-        return ServerMessage.task_solved.name
+        return ServerMessage.task_solved.name.encode('utf-8')
 
     def list_tasks(self, nick, msg):
         try:
             lab_no = int(msg.split(' ')[1])
         except ValueError:
-            self.clients[nick][0].send(ServerMessage.wrong_lab_no.name)
+            self.clients[nick][0].send(ServerMessage.wrong_lab_no.name.encode('utf-8'))
         if lab_no not in range(1, 5):
-            self.clients[nick][0].send(ServerMessage.wrong_lab_no.name)
+            self.clients[nick][0].send(ServerMessage.wrong_lab_no.name.encode('utf-8'))
         reply = ''
-        for task in self.db_sess.query(Task).filter(Task.lab_no == lab_no).all()
+        for task in self.db_sess.query(Task).filter(Task.lab_no == lab_no).all():
             reply += task + '\n'
         
         self.clients[nick][0].sendall(reply.encode('utf-8'))
@@ -237,18 +237,18 @@ class Server:
         try:
             mode = int(msg.split(' ')[1])
         except ValueError:
-            self.clients[nick][0].send(ServerMessage.wrong_stats_mode.name)
+            self.clients[nick][0].send(ServerMessage.wrong_stats_mode.name.encode('utf-8'))
         if mode not in range(1, 3):
-            self.clients[nick][0].send(ServerMessage.wrong_stats_mode.name)
+            self.clients[nick][0].send(ServerMessage.wrong_stats_mode.name.encode('utf-8'))
         reply = ''
         if mode == 1:
             for user in self.db_sess.query(User).all():
-                reply += user + '\n'
+                reply += f'{user}\n'
         elif mode == 2:
             try:
                 taskname = msg.split(' ')[2]
             except ValueError:
-                self.clients[nick][0].send(ServerMessage.wrong_task.name)
+                self.clients[nick][0].send(ServerMessage.wrong_task.name.encode('utf-8'))
             solutions = self.db_sess.query(Solution).filter(Solution.task.has(Task.name == taskname)).order_by(Solution.solve_time.asc()).all()
             if len(solutions) > 0:
                 reply += f'Solutions for {solutions[0].task}\n'
@@ -295,14 +295,14 @@ def parse_args():
     args = p.parse_args()
     host = args.host
     port = args.port
-    init_db = args.init-db
+    init_db = args.init_db
     flags = args.flags
 
     return host, port, init_db, flags
 
 def main():
-    host, port, init_db = parse_args()
-    ThreadedServer(host, port, init_db, flags).listen()
+    host, port, init_db, flags= parse_args()
+    Server(host, port, init_db, flags).listen()
 
 if __name__ == '__main__':
     main()
