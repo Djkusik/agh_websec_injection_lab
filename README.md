@@ -84,5 +84,9 @@ docker-compose up -d --build
   * http://167.172.107.163:5001
   * http://167.172.107.163:5002
 
+# Troubleshooting
+  * docker-compose/docker build command says that pip returned non-zero code (137)
+    * Clear memory or reboot machine - if that won't help then buy more RAM
+
 # Solutions
 * [Solve scripts](/solve)
