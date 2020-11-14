@@ -15,10 +15,10 @@ class User(Base):
     password = Column(String)
     
     tasks = relationship(
-                'Task',
-                secondary='solutions',
-                back_populates='users'
-            )
+        'Task',
+        secondary='solutions',
+        back_populates='users'
+    )
 
     def __repr__(self):
         return f'{self.name} :: {len(self.tasks)} task/s solved ({sum([t.points for t in self.tasks])} points)'
@@ -34,10 +34,10 @@ class Task(Base):
     points = Column(Integer, default=0)
 
     users = relationship(
-                'User',
-                secondary='solutions',
-                back_populates='tasks'
-            )
+        'User',
+        secondary='solutions',
+        back_populates='tasks'
+    )
 
     def __repr__(self):
         return f'{self.name} :: <{self.points} | {self.lab_no}> solved {len(self.users)} times'

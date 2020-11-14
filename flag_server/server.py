@@ -4,20 +4,22 @@ import signal
 import argparse
 import threading
 import os
+import json
 
 from sqlalchemy import create_engine, and_
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import IntegrityError
 from common.chat_enums import ServerMessage, ClientMessage
+from common.ascii_art import arts
 from common.models import *
 
 
 PASSWORD = os.environ.get("FLAG_DB_PASSWORD", 'admin1234')
 
 class Server:
-    banned_nick = ['zakazany', 'SERVER']
+    banned_nick = ['SERVER', 'admin']
 
-    def __init__(self, host=socket.gethostname(), port=5555, init_db=False):
+    def __init__(self, host=socket.gethostname(), port=5555, init_db=False, flags='./flags.json'):
         self.host = host
         self.port = port
         self.clients = {}
@@ -57,6 +59,30 @@ class Server:
         Session = sessionmaker(autocommit=False, autoflush=True)
         Session.configure(bind=engine)
         return Session()
+
+    def read_flags(self, pathfile):
+        try:
+            with open(pathfile) as f:
+                flags = json.loads(f.read())
+        except FileNotFoundError:
+            print(f'File {pathfile} not found')
+            sys.exit(1)
+        return flags
+
+    def add_flags(self, flags):
+        for item in flags:
+            task = Task(
+                name=item['taskname'], 
+                lab_no=item['lab_no'],
+                flag=item['flag'],
+                points=item['points']
+            )
+            try:
+                task = self.db_sess.add(task)
+                self.db_sess.commit()
+            except IntegrityError as e:
+                self.db_sess.rollback()
+                sys.exit(1)
 
     def listen(self):
         print("Starting listening...")
@@ -104,6 +130,7 @@ class Server:
     def client_tcp(self, conn, addr):
         nick = self.register_client(conn, addr)
         if nick is not None:
+            self.clients[nick][0].sendall(arts[0].encode('utf-8'))
             self.broadcast("SERVER", f"{nick}>Hello everyone! I joined here")
             try:
                 while True:
@@ -114,15 +141,17 @@ class Server:
                         del self.clients[nick]
                         break
                     elif msg.startswith('Stats'):
-                        self.show_stats(nick)
+                        self.show_stats(nick, msg)
                     elif msg.startswith('R'):
                         self.try_register(nick, msg)
                     elif msg.startswith('S'):
                         self.try_solve(nick, msg)
                     elif msg.startswith('L'):
-                        self.list_tasks(nick)
+                        self.list_tasks(nick, msg)
                     elif msg.startswith('M'):
                         self.broadcast(nick, msg)
+                    else:
+                        pass
             except:
                 del self.clients[nick]
             print(f"{nick} left the chat :(")
@@ -191,11 +220,52 @@ class Server:
         self.db_sess.commit()
         return ServerMessage.task_solved.name
 
-    def list_tasks(self, nick):
-        pass
+    def list_tasks(self, nick, msg):
+        try:
+            lab_no = int(msg.split(' ')[1])
+        except ValueError:
+            self.clients[nick][0].send(ServerMessage.wrong_lab_no.name)
+        if lab_no not in range(1, 5):
+            self.clients[nick][0].send(ServerMessage.wrong_lab_no.name)
+        reply = ''
+        for task in self.db_sess.query(Task).filter(Task.lab_no == lab_no).all()
+            reply += task + '\n'
+        
+        self.clients[nick][0].sendall(reply.encode('utf-8'))
 
-    def show_stats(self, nick):
-        pass
+    def show_stats(self, nick, msg):
+        try:
+            mode = int(msg.split(' ')[1])
+        except ValueError:
+            self.clients[nick][0].send(ServerMessage.wrong_stats_mode.name)
+        if mode not in range(1, 3):
+            self.clients[nick][0].send(ServerMessage.wrong_stats_mode.name)
+        reply = ''
+        if mode == 1:
+            for user in self.db_sess.query(User).all():
+                reply += user + '\n'
+        elif mode == 2:
+            try:
+                taskname = msg.split(' ')[2]
+            except ValueError:
+                self.clients[nick][0].send(ServerMessage.wrong_task.name)
+            solutions = self.db_sess.query(Solution).filter(Solution.task.has(Task.name == taskname)).order_by(Solution.solve_time.asc()).all()
+            if len(solutions) > 0:
+                reply += f'Solutions for {solutions[0].task}\n'
+                for i, solution in enumerate(solutions):
+                    reply += f'{i+1}. {solution.user.name} -> {solution.solve_time}\n'
+            else:
+                reply += 'Lack of solutions for this task now'
+        self.clients[nick][0].sendall(reply.encode('utf-8'))
+
+    def add_task(self, taskname, lab_no, flag, points):
+        task = Task(name=taskname, lab_no=lab_no, flag=flag, points=points)
+        try:
+            task = self.db_sess(task)
+            self.db_sess.commit()
+        except IntegrityError as e:
+            self.db_sess.rollback()
+            raise
 
     def close(self):
         self.disc_clients()
@@ -221,16 +291,18 @@ def parse_args():
     p.add_argument('-ht', '--host', help='Host address to bind', type=str, default=socket.gethostname())
     p.add_argument('-p', '--port', help='Server port to bind', type=int, default=5555)
     p.add_argument('-idb', '--init-db', help='True to init db for first time', action='store_true')
+    p.add_argument('-f', '--flags', help='Path to JSON file with flags', type=str, default='./flags.json')
     args = p.parse_args()
     host = args.host
     port = args.port
     init_db = args.init-db
+    flags = args.flags
 
-    return host, port, init_db
+    return host, port, init_db, flags
 
 def main():
     host, port, init_db = parse_args()
-    ThreadedServer(host, port, init_db).listen()
+    ThreadedServer(host, port, init_db, flags).listen()
 
 if __name__ == '__main__':
     main()

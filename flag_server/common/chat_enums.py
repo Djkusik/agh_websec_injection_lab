@@ -16,6 +16,8 @@ class ServerMessage(Enum):
     invalid_flag = 13
     solved_already = 14
     task_solved = 15
+    wrong_lab_no = 16
+    wrong_stats_mode = 17
 
 
 class ClientMessage(Enum):

@@ -117,7 +117,8 @@ class Client:
         print("R [password]\t\t- to register your nickname")
         print("S [password] [taskname] [flag] - try to solve task")
         print("L [lab_no]\t\t- list tasks")
-        print("Stats\t\t - show statistics")
+        print("Stats 1\t\t - show users statistics")
+        print("Stats 2 [taskname]\t- show task statistics")
         print(*self.quit_opt, "\t- to close chat", sep=" ")
         print(*self.help_opt, "\t\t\t- to print this help", sep=" ")
 
