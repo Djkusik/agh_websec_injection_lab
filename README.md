@@ -49,7 +49,7 @@
   |      First task is to meet The End. The Gryphon is the one,      |
   |        who knows exact location, ask his head.                   |
   |      Second task has to be brutal strenght demonstration          |
-   |       You need to impress The Royal Paladin.                     |
+   |       You need to command The Rainbow Paladin.                   |
    |     Third task.                                                  |
    |                                                                 |
   |                                              ____________________|_
