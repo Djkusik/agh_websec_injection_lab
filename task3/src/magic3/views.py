@@ -6,7 +6,6 @@ from django.conf import settings
 
 
 URL_BASE = settings.URL_BASE
-
 def index(request):
     if 'why' in request.GET and request.GET['why'] == 'why You love AGH':
         user = auth.authenticate(username='young_Padawan', password='None')
@@ -14,8 +13,8 @@ def index(request):
             request.user = user
             auth.login(request, user)
         else:
-            return HttpResponse('Login with young_Padawan:None at /admin')
-        return redirect('/admin')
+            return HttpResponse('Login with young_Padawan:None at /{}/admin'.format(URL_BASE))
+        return redirect(URL_BASE + '/admin')
 
     output = '''
 <!DOCTYPE html>
