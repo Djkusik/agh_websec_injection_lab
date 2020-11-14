@@ -4,7 +4,7 @@ import struct
 import argparse
 import threading
 
-from chat_enums import ServerMessage, ClientMessage
+from common.chat_enums import ServerMessage, ClientMessage
 
 
 class Client:
@@ -19,7 +19,6 @@ class Client:
         print(f"Initializing chat client to the server on {host}:{port}")
 
         self.socket_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket_udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
         try:
             self.socket_tcp.connect((self.host, self.port))
@@ -39,7 +38,7 @@ class Client:
                 self.socket_tcp.sendall(nick.encode('utf-8'))
 
                 msg = self.socket_tcp.recv(1024).decode('utf-8')
-                if msg == ServerMessage.connection_established.name:
+                if msg == ServerMessage.nick_correct.name:
                     return nick
 
                 elif msg == ServerMessage.nick_taken.name:
@@ -101,8 +100,6 @@ class Client:
                     self.close()
                 elif usr_input in self.help_opt:
                     self.print_help()
-                elif usr_input.startswith("U "):
-                    self.socket_udp.sendto(bytes(f"{self.nick}::{usr_input[2::]}", 'utf-8'), (self.host, self.port))
                 else:
                     self.socket_tcp.sendall(usr_input.encode('utf-8'))
         except KeyboardInterrupt:
@@ -116,8 +113,11 @@ class Client:
         print("\r" + msg, f"\n{self.nick}> ", end='')
 
     def print_help(self):
-        print("[message]\t\t- to send message over TCP socket")
-        print("U [message]\t\t- to send message over UDP socket")
+        print("M [message]\t\t- to send message over TCP socket [broadcast]")
+        print("R [password]\t\t- to register your nickname")
+        print("S [password] [taskname] [flag] - try to solve task")
+        print("L [lab_no]\t\t- list tasks")
+        print("Stats\t\t - show statistics")
         print(*self.quit_opt, "\t- to close chat", sep=" ")
         print(*self.help_opt, "\t\t\t- to print this help", sep=" ")
 
