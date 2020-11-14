@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class VulnConfig(AppConfig):
-    name = 'task3'
+    name = 'magic3'

@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'task3',
+    'magic3',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'cve201914234.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'task3_db',
+        'NAME': 'magic3_db',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'db',

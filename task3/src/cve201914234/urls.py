@@ -5,5 +5,5 @@ from django.conf import settings
 URL_BASE = settings.URL_BASE
 urlpatterns = [
     path(URL_BASE + '/admin/', admin.site.urls),
-    path(URL_BASE, include('task3.urls'))
+    path(URL_BASE, include('magic3.urls'))
 ]

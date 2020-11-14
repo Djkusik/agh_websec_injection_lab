@@ -5,6 +5,8 @@ from django.contrib import auth
 from django.conf import settings
 
 
+URL_BASE = settings.URL_BASE
+
 def index(request):
     if 'why' in request.GET and request.GET['why'] == 'why You love AGH':
         user = auth.authenticate(username='young_Padawan', password='None')
@@ -22,7 +24,7 @@ def index(request):
     <title>-={ AGH web sec | Guons the Lazy }=-</title>
     <style>
     body {
-        background-image: url("/static/images/stars.jpg");
+        background-image: url("URL_BASE/static/images/stars.jpg");
         margin: 0 auto;
     }
     #content {
@@ -45,5 +47,5 @@ def index(request):
     </form>
     </div>
 </body>
-</html>'''
+</html>'''.replace('URL_BASE', URL_BASE)
     return HttpResponse(output)
