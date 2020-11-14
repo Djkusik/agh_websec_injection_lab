@@ -101,9 +101,9 @@ class Client:
                     print("\nFlag is incorrect :c")
                 elif msg == ServerMessage.task_solved.name:
                     print("\nCongratulashions - correct flag!")
-                elif msg == ServerMessage.wrong_lab_no:
+                elif msg == ServerMessage.wrong_lab_no.name:
                     print("\nWrong lab number")
-                elif msg == ServerMessage.wrong_stats_mode:
+                elif msg == ServerMessage.wrong_stats_mode.name:
                     print("\nWrong stats mode number")
                 else:
                     self.print_msg(msg)
@@ -149,7 +149,6 @@ class Client:
         self.is_running = False
         self.disc_from_server()
         self.socket_tcp.close()
-        self.socket_udp.close()
         print("Client is now closed")
         sys.exit(0)
 

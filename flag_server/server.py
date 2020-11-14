@@ -5,6 +5,8 @@ import argparse
 import threading
 import os
 import json
+import traceback
+import dotenv
 
 from sqlalchemy import create_engine, and_
 from sqlalchemy.orm import sessionmaker
@@ -13,16 +15,17 @@ from common.chat_enums import ServerMessage, ClientMessage
 from common.ascii_art import arts
 from common.models import *
 
-
+dotenv.load_dotenv()
 PASSWORD = os.environ.get("FLAG_DB_PASSWORD", 'admin1234')
 
 class Server:
     banned_nick = ['SERVER', 'admin']
 
-    def __init__(self, host=socket.gethostname(), port=5555, init_db=False, flags='./flags.json'):
+    def __init__(self, host=socket.gethostname(), port=5555, init_db=False, pathflags='./flags.json'):
         self.host = host
         self.port = port
         self.clients = {}
+        self.udp_flag = os.environ.get('UDP_FLAG', 'bit{udp_temporary}')
         
         try:
             db_engine = self.init_engine()
@@ -30,8 +33,11 @@ class Server:
             if init_db:
                 print("Initializing DB for first time")
                 self.init_db(db_engine)
+                flags = self.read_flags(pathflags)
+                self.add_flags(flags)
         except:
             print("Database said bye bye and something went wrong")
+            traceback.print_exc()
             sys.exit(1)
 
         print(f"Initializing chat server on {host}:{port}")
@@ -153,6 +159,8 @@ class Server:
                     else:
                         pass
             except:
+                self.clients[nick][0].send(ServerMessage.exit.name.encode('utf-8'))
+                traceback.print_exc()
                 del self.clients[nick]
             print(f"{nick} left the chat :(")
             self.broadcast("SERVER", f"{nick}>Goodbye chat, I went offline")
@@ -160,10 +168,9 @@ class Server:
 
     def client_udp(self):
         while True:
-            bytes_msg, address = self.socket_udp.recvfrom(8192)
-            msg = str(bytes_msg, 'utf-8')
-            print(f"UDP MSG - {address}::{msg}")
-            answer = str.encode("bit{temporary}")
+            msg, address = self.socket_udp.recvfrom(1024)
+            print(f"UDP MSG - {address}::{str(msg, 'utf-8')}")
+            answer = str.encode(self.udp_flag)
             self.socket_udp.sendto(answer, address)
 
     def broadcast(self, src_nick, msg):
@@ -175,7 +182,7 @@ class Server:
     def try_register(self, nick, msg):
         try:
             password = msg.split(' ')[1]
-        except ValueError:
+        except (ValueError, IndexError):
             self.clients[nick][0].send(ServerMessage.password_empty.name.encode('utf-8'))
             return
         if self.register(nick, password):
@@ -223,13 +230,13 @@ class Server:
     def list_tasks(self, nick, msg):
         try:
             lab_no = int(msg.split(' ')[1])
-        except ValueError:
+        except (ValueError, IndexError):
             self.clients[nick][0].send(ServerMessage.wrong_lab_no.name.encode('utf-8'))
         if lab_no not in range(1, 5):
             self.clients[nick][0].send(ServerMessage.wrong_lab_no.name.encode('utf-8'))
         reply = ''
         for task in self.db_sess.query(Task).filter(Task.lab_no == lab_no).all():
-            reply += task + '\n'
+            reply += f'{task}\n'
         
         self.clients[nick][0].sendall(reply.encode('utf-8'))
 
