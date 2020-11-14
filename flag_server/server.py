@@ -254,7 +254,7 @@ class Server:
         elif mode == 2:
             try:
                 taskname = msg.split(' ')[2]
-            except ValueError:
+            except (ValueError, IndexError):
                 self.clients[nick][0].send(ServerMessage.wrong_task.name.encode('utf-8'))
             solutions = self.db_sess.query(Solution).filter(Solution.task.has(Task.name == taskname)).order_by(Solution.solve_time.asc()).all()
             if len(solutions) > 0:

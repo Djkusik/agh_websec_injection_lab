@@ -136,14 +136,14 @@ class Client:
         print("\r" + msg, f"\n{self.nick}> ", end='')
 
     def print_help(self):
-        print("M [message]\t\t- to send message over TCP socket [broadcast]")
-        print("R [password]\t\t- to register your nickname")
-        print("S [password] [taskname] [flag] - try to solve task")
-        print("L [lab_no]\t\t- list tasks")
-        print("Stats 1\t\t - show users statistics")
-        print("Stats 2 [taskname]\t- show task statistics")
-        print(*self.quit_opt, "\t- to close chat", sep=" ")
-        print(*self.help_opt, "\t\t\t- to print this help", sep=" ")
+        print("M [message]\t\t\t- to send message over TCP socket [broadcast]")
+        print("R [password]\t\t\t- to register your nickname")
+        print("S [password] [taskname] [flag]\t- try to solve task")
+        print("L [lab_no]\t\t\t- list tasks")
+        print("Stats 1\t\t\t\t- show users statistics")
+        print("Stats 2 [taskname]\t\t- show task statistics")
+        print(*self.quit_opt, "\t\t- to close chat", sep=" ")
+        print(*self.help_opt, "\t\t\t\t- to print this help", sep=" ")
 
     def close(self):
         self.is_running = False
