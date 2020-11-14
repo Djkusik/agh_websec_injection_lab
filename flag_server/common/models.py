@@ -23,6 +23,9 @@ class User(Base):
     def __repr__(self):
         return f'{self.name} :: {len(self.tasks)} task/s solved ({sum([t.points for t in self.tasks])} points)'
 
+    def get_points(self):
+        return sum([t.points for t in self.tasks])
+
 
 class Task(Base):
     __tablename__ = 'tasks'

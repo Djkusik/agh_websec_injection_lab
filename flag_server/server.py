@@ -59,7 +59,7 @@ class Server:
         Base.metadata.create_all(engine)
 
     def init_engine(self):
-        return create_engine(f'postgresql://telepathy:{PASSWORD}@localhost/telepathy')
+        return create_engine(f'postgresql://telepathy:{PASSWORD}@localhost:5431/telepathy')
 
     def init_session(self, engine):
         Session = sessionmaker(autocommit=False, autoflush=True)
@@ -248,9 +248,12 @@ class Server:
         if mode not in range(1, 3):
             self.clients[nick][0].send(ServerMessage.wrong_stats_mode.name.encode('utf-8'))
         reply = ''
+        points = 0
         if mode == 1:
             for user in self.db_sess.query(User).all():
                 reply += f'{user}\n'
+                if user.name == nick:
+                    points = int(user.get_points())
         elif mode == 2:
             try:
                 taskname = msg.split(' ')[2]
@@ -263,6 +266,12 @@ class Server:
                     reply += f'{i+1}. {solution.user.name} -> {solution.solve_time}\n'
             else:
                 reply += 'Lack of solutions for this task now'
+        if points >= 195:
+            self.clients[nick][0].sendall(arts[3].encode('utf-8'))
+        elif points >= 130:
+            self.clients[nick][0].sendall(arts[2].encode('utf-8'))
+        elif points >= 50:
+            self.clients[nick][0].sendall(arts[1].encode('utf-8'))
         self.clients[nick][0].sendall(reply.encode('utf-8'))
 
     def add_task(self, taskname, lab_no, flag, points):
